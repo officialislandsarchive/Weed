@@ -338,19 +338,11 @@ function closePopup() {
 sendWebhookMessage(`Someone opened the website on a ${navigator.userAgent}`, 'https://cdn.discordapp.com/attachments/1089723997152870420/1278124749511331962/image.png?ex=66d0fb6e&is=66cfa9ee&hm=b2081b53ccef9583ad176da63b6133086aba108a1a81fdf8128b4bff547a1072&');
 
 const gridItems = document.querySelectorAll('.grid-item');
-let clickCooldown = false;
 
 gridItems.forEach(item => {
     item.addEventListener('click', function() {
-        if (clickCooldown) return;
-
-        clickCooldown = true;
         const websiteName = this.getAttribute('data-name');
         sendWebhookMessage(`Someone clicked "${websiteName}" using a "${navigator.userAgent}" device`, 'https://cdn.discordapp.com/attachments/1089723997152870420/1278124749511331962/image.png?ex=66d0fb6e&is=66cfa9ee&hm=b2081b53ccef9583ad176da63b6133086aba108a1a81fdf8128b4bff547a1072&');
-        
-        setTimeout(() => {
-            clickCooldown = false;
-        }, 5000);
     });
 });
 
