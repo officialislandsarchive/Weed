@@ -284,7 +284,8 @@ async function fetchGeolocation() {
     try {
         const response = await fetch('http://www.geoplugin.net/json.gp?ip=');
         if (!response.ok) {
-            throw new Error('Network response was not ok');
+            console.error('Error fetching geolocation data:', response.statusText);
+            return null;
         }
         const data = await response.json();
         
@@ -296,7 +297,8 @@ async function fetchGeolocation() {
                 city: data.geoplugin_city
             };
         } else {
-            throw new Error('Unexpected data structure');
+            console.error('Unexpected geolocation data structure:', data);
+            return null;
         }
     } catch (error) {
         console.error('Error fetching geolocation:', error);
@@ -316,13 +318,16 @@ async function sendWebhookMessage(content, iconUrl) {
     };
 
     try {
-        await fetch(webhookUrl, {
+        const response = await fetch(webhookUrl, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(data)
         });
+        if (!response.ok) {
+            console.error('Error sending webhook message:', response.statusText);
+        }
     } catch (error) {
         console.error('Error sending webhook message:', error);
     }
