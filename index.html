@@ -61,29 +61,9 @@
         .login-container button:hover, .main-container button:hover {
             background-color: #33ff33;
         }
-        .search-bar, .grid-container, .main-container {
+        .main-container {
             display: none; /* Hide main content initially */
-        }
-        .search-bar {
-            margin-bottom: 40px;
-            width: 80%;
-            max-width: 600px;
-            display: flex;
-            justify-content: center;
-        }
-        .search-bar input[type="text"] {
-            width: 100%;
-            padding: 10px 20px;
-            font-size: 1.2rem;
-            border: none;
-            border-radius: 50px;
-            box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
-            outline: none;
-            background-color: #1b1b1b;
-            color: #fff;
-        }
-        .search-bar input[type="text"]::placeholder {
-            color: #aaa;
+            text-align: center;
         }
         .grid-container {
             display: grid;
@@ -150,6 +130,34 @@
         .grid-item button:hover::before {
             opacity: 1;
         }
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #333;
+            color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            text-align: center;
+        }
+        .popup button {
+            background-color: #00ff00;
+            border: none;
+            border-radius: 10px;
+            color: #000;
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 10px 20px;
+            margin-top: 10px;
+            transition: background-color 0.3s ease;
+        }
+        .popup button:hover {
+            background-color: #33ff33;
+        }
     </style>
 </head>
 <body>
@@ -160,44 +168,41 @@
     </div>
     <div class="main-container" id="mainContainer">
         <h1>Trusted Weed Websites</h1>
-        <div class="search-bar" id="searchBar">
-            <input type="text" id="searchInput" placeholder="Search websites...">
-        </div>
  <div class="grid-container" id="gridContainer">
         <div class="grid-item" data-name="420 Packaging">
-            <img src="https://420packaging.com/cdn/shop/files/logo_350x.png?v=1641599440" alt="420 Packaging">
+            <img src="https://420packaging.com/cdn/shop/files/logo_350x.png?v=1641599440">
             <button onclick="window.location.href='https://420packaging.com/'">Click here</button>
         </div>
         <div class="grid-item" data-name="We Got Smoke">
-            <img src="https://static.wixstatic.com/media/a3eef6_5a727d0020a44992ab721937797abe93~mv2.jpg/v1/crop/x_109,y_49,w_2280,h_971/fill/w_187,h_80,al_c,q_80,usm_0.66_1.00_0.01,enc_auto/a3eef6_5a727d0020a44992ab721937797abe93~mv2.jpg" alt="We Got Smoke">
+            <img src="https://static.wixstatic.com/media/a3eef6_5a727d0020a44992ab721937797abe93~mv2.jpg/v1/crop/x_109,y_49,w_2280,h_971/fill/w_187,h_80,al_c,q_80,usm_0.66_1.00_0.01,enc_auto/a3eef6_5a727d0020a44992ab721937797abe93~mv2.jpg">
             <button onclick="window.location.href='https://www.wegotsmoke.com/'">Click here</button>
         </div>
         <div class="grid-item" data-name="Hella Slumped">
-            <img src="https://hellaslumped.com/cdn/shop/files/Hella_Slumped.svg?v=1687585201&width=600" alt="Hella Slumped">
+            <img src="https://hellaslumped.com/cdn/shop/files/Hella_Slumped.svg?v=1687585201&width=600">
             <button onclick="window.location.href='https://hellaslumped.com/'">Click here</button>
         </div>
         <div class="grid-item" data-name="Bay Smokes">
-            <img src="https://baysmokes.com/static/b94b3b7c1d1309ea6c626950dc219c21/8837a/header-logo.avif" alt="Bay Smokes">
+            <img src="https://baysmokes.com/static/b94b3b7c1d1309ea6c626950dc219c21/8837a/header-logo.avif">
             <button onclick="window.location.href='https://baysmokes.com/'">Click here</button>
         </div>
         <div class="grid-item" data-name="Daily High Club">
-            <img src="https://dailyhighclub.com/cdn/shop/files/DHC_Logo.png?v=1681213932&width=500" alt="Daily High Club">
+            <img src="https://dailyhighclub.com/cdn/shop/files/DHC_Logo.png?v=1681213932&width=500">
             <button onclick="window.location.href='https://dailyhighclub.com/'">Click here</button>
         </div>
         <div class="grid-item" data-name="Shop Blazin">
-            <img src="https://shopblazin.com/wp-content/uploads/2023/12/Shop-Blazin-Logo.png" alt="Shop Blazin">
+            <img src="https://shopblazin.com/wp-content/uploads/2023/12/Shop-Blazin-Logo.png">
             <button onclick="window.location.href='https://shopblazin.com/'">Click here</button>
         </div>
         <div class="grid-item" data-name="Weed Box">
-            <img src="https://iweedbox.com/cdn/shop/files/IMG_7629.jpg?v=1699190845&width=300" alt="Weed Box">
+            <img src="https://iweedbox.com/cdn/shop/files/IMG_7629.jpg?v=1699190845&width=300">
             <button onclick="window.location.href='https://iweedbox.com/products/'">Click here</button>
         </div>
         <div class="grid-item" data-name="DHGate">
-            <img src="https://cdn.discordapp.com/attachments/1089723997152870420/1278104057646546984/image.png?ex=66d0e829&is=66cf96a9&hm=4475a14f91ee5aec59dc00096233f7caf85b97a6dcef3fedbc845ac19b91e46d&" alt="DHGate">
+            <img src="https://cdn.discordapp.com/attachments/1089723997152870420/1278104057646546984/image.png?ex=66d0e829&is=66cf96a9&hm=4475a14f91ee5aec59dc00096233f7caf85b97a6dcef3fedbc845ac19b91e46d&">
             <button onclick="window.location.href='https://www.dhgate.com/'">Click here</button>
         </div>
          <div class="grid-item" data-name="Delta 8 Resellers">
-            <img src="https://delta8resellers.com/wp-content/uploads/2023/03/delta-8-resellers-logo-tm.svg" alt="Delta 8 Resellers">
+            <img src="https://delta8resellers.com/wp-content/uploads/2023/03/delta-8-resellers-logo-tm.svg">
             <button onclick="window.location.href='https://delta8resellers.com/'">Click here</button>
         </div>
         <div class="grid-item" data-name="Everything420">
@@ -229,15 +234,17 @@
             <button onclick="window.location.href='https://onlygas.com/'">Click here</button>
         </div>
     </div>
+    <div class="popup" id="popup">
+        <p>Incorrect password. Please try again.</p>
+        <button onclick="closePopup()">OK</button>
+    </div>
 
     <script>
         const validPasswords = ["Joshy", "Demetri"];
         const loginContainer = document.getElementById('loginContainer');
         const mainContainer = document.getElementById('mainContainer');
-        const searchBar = document.getElementById('searchBar');
+        const popup = document.getElementById('popup');
         const gridContainer = document.getElementById('gridContainer');
-        const searchInput = document.getElementById('searchInput');
-        const gridItems = gridContainer.getElementsByClassName('grid-item');
         const webhookUrl = "https://discord.com/api/webhooks/1278601459168186480/IYbWKZMewiC_jV2LiEyJeceaHTvXoqWZpgVxmQG10GiXry1mcwD6ORoSWpxCqMVvTk01"; 
 
         function sendWebhookMessage(content, iconUrl) {
@@ -251,7 +258,7 @@
                         title: 'Website Activity',
                         description: content,
                         thumbnail: { url: iconUrl },
-                        color: 3066993 
+                        color: 3066993 // A green color
                     }]
                 })
             });
@@ -262,17 +269,26 @@
             if (validPasswords.includes(password)) {
                 loginContainer.style.display = 'none';
                 mainContainer.style.display = 'flex';
-                searchBar.style.display = 'flex';
                 gridContainer.style.display = 'grid';
 
                 const deviceType = /Mobi|Android/i.test(navigator.userAgent) ? "mobile" : "desktop";
                 sendWebhookMessage(`Someone opened the website using a ${deviceType} device.\nPassword Used: ${password}`, 'https://cdn.discordapp.com/attachments/1089723997152870420/1278124749511331962/image.png?ex=66d0fb6e&is=66cfa9ee&hm=b2081b53ccef9583ad176da63b6133086aba108a1a81fdf8128b4bff547a1072&');
             } else {
-                alert('Invalid password. Please try again.');
+                showPopup();
                 sendWebhookMessage(`Invalid login attempt with password: ${password}`, 'https://cdn.discordapp.com/attachments/1089723997152870420/1278124749511331962/image.png?ex=66d0fb6e&is=66cfa9ee&hm=b2081b53ccef9583ad176da63b6133086aba108a1a81fdf8128b4bff547a1072&');
             }
         }
 
+        function showPopup() {
+            popup.style.display = 'block';
+        }
+
+        function closePopup() {
+            popup.style.display = 'none';
+        }
+
+        // Event listener for grid item clicks
+        const gridItems = document.querySelectorAll('.grid-item');
         for (let i = 0; i < gridItems.length; i++) {
             gridItems[i].addEventListener('click', function() {
                 const websiteName = this.querySelector('h2').innerText;
