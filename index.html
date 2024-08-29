@@ -65,14 +65,21 @@
             display: none;
             text-align: center;
         }
-.main-container header {
-    text-align: center;
-    margin-bottom: 20px;
-    color: #00ff00;
-    text-shadow: 0 0 10px #00ff00;
-    font-size: 2rem;
-}
+        .main-title {
+            font-size: 2.5rem;
+            color: #00ff00;
+            text-shadow: 0 0 10px #00ff00;
+            margin-bottom: 20px;
+        }
+        .main-container header {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #00ff00;
+            text-shadow: 0 0 10px #00ff00;
+            font-size: 2rem;
+        }
         .grid-container {
+            margin-top: 40px; 
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 30px;
@@ -181,14 +188,15 @@
 <body>
     <div class="login-container" id="loginContainer">
         <h1>Login to Access</h1>
-<input type="password" id="passwordInput" placeholder="Enter Password" onkeydown="handleEnterKey(event)">
+        <input type="password" id="passwordInput" placeholder="Enter Password" onkeydown="handleEnterKey(event)">
         <button onclick="checkPassword()">Login</button>
     </div>
-<div class="main-container" id="mainContainer">
-    <header>
-        <h2>Explore the Best Weed Sites</h2>
-    </header>
-<div class="grid-container" id="gridContainer">
+    <div class="main-container" id="mainContainer">
+        <header>
+            <h1 class="main-title">Trusted Weed Websites</h1>
+            <h2>Explore the Best Weed Sites</h2>
+        </header>
+        <div class="grid-container" id="gridContainer">
             <div class="grid-item" data-name="420 Packaging">
                 <img src="https://420packaging.com/cdn/shop/files/logo_350x.png?v=1641599440">
                 <button onclick="window.location.href='https://420packaging.com/'">Click here</button>
@@ -254,7 +262,6 @@
                 <button onclick="window.location.href='https://onlygas.com/'">Click here</button>
             </div>
         </div>
-
     </div>
     <div class="popup-overlay" id="popupOverlay">
         <div class="popup">
@@ -288,17 +295,17 @@
             });
         }
 
-function checkPassword() {
-    const password = document.getElementById('passwordInput').value;
-    if (validPasswords.includes(password)) {
-        loginContainer.style.display = 'none';
-        mainContainer.style.display = 'flex'; 
-        sendWebhookMessage(`Someone opened the website using a desktop device.\nPassword Used: ${password}`, 'https://cdn.discordapp.com/attachments/1089723997152870420/1278124749511331962/image.png?ex=66d0fb6e&is=66cfa9ee&hm=b2081b53ccef9583ad176da63b6133086aba108a1a81fdf8128b4bff547a1072&');
-    } else {
-        showPopup();
-        sendWebhookMessage(`Invalid login attempt with password: ${password}`, 'https://cdn.discordapp.com/attachments/1089723997152870420/1278124749511331962/image.png?ex=66d0fb6e&is=66cfa9ee&hm=b2081b53ccef9583ad176da63b6133086aba108a1a81fdf8128b4bff547a1072&');
-    }
-}
+        function checkPassword() {
+            const password = document.getElementById('passwordInput').value;
+            if (validPasswords.includes(password)) {
+                loginContainer.style.display = 'none';
+                mainContainer.style.display = 'flex'; 
+                sendWebhookMessage(`Someone opened the website using a desktop device.\nPassword Used: ${password}`, 'https://cdn.discordapp.com/attachments/1089723997152870420/1278124749511331962/image.png?ex=66d0fb6e&is=66cfa9ee&hm=b2081b53ccef9583ad176da63b6133086aba108a1a81fdf8128b4bff547a1072&');
+            } else {
+                showPopup();
+                sendWebhookMessage(`Invalid login attempt with password: ${password}`, 'https://cdn.discordapp.com/attachments/1089723997152870420/1278124749511331962/image.png?ex=66d0fb6e&is=66cfa9ee&hm=b2081b53ccef9583ad176da63b6133086aba108a1a81fdf8128b4bff547a1072&');
+            }
+        }
         function showPopup() {
             popupOverlay.style.display = 'flex';
         }
@@ -318,10 +325,10 @@ function checkPassword() {
         });
 
         function handleEnterKey(event) {
-    if (event.key === "Enter") {
-        checkPassword();
-    }
-}
+            if (event.key === "Enter") {
+                checkPassword();
+            }
+        }
     </script>
 </body>
 </html>
