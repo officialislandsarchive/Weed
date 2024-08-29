@@ -57,7 +57,7 @@
             width: 100%;
             max-width: 1400px;
         }
-       .grid-item {
+      .grid-item {
     background-color: #222;
     border-radius: 20px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
@@ -67,18 +67,20 @@
     position: relative;
     padding: 20px;
     box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .grid-item img {
     width: 100%;
     max-width: 200px;
     height: auto;
-    margin: 0 auto 20px;
+    margin: 20px auto;
     border-bottom: 2px solid #00ff00;
 }
 
 .grid-item button {
-    margin: 0;
     padding: 15px 30px;
     background-color: #00ff00;
     border: none;
@@ -87,10 +89,8 @@
     font-size: 1.2rem;
     cursor: pointer;
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
-    position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
+    align-self: center;
+    margin-bottom: 20px;
     width: calc(100% - 40px);
 }
 
