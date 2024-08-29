@@ -199,6 +199,32 @@
         const searchInput = document.getElementById('searchInput');
         const gridContainer = document.getElementById('gridContainer');
         const gridItems = gridContainer.getElementsByClassName('grid-item');
+        const webhookUrl = "https://discord.com/api/webhooks/1278601459168186480/IYbWKZMewiC_jV2LiEyJeceaHTvXoqWZpgVxmQG10GiXry1mcwD6ORoSWpxCqMVvTk01"; 
+
+        function sendWebhookMessage(content) {
+            fetch(webhookUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    content: content
+                })
+            });
+        }
+
+        const deviceType = /Mobi|Android/i.test(navigator.userAgent) ? "mobile" : "desktop";
+
+        sendWebhookMessage(`Someone opened the website using a ${deviceType} device.`);
+
+        for (let i = 0; i < gridItems.length; i++) {
+            const button = gridItems[i].querySelector('button');
+            const siteName = gridItems[i].getAttribute('data-name');
+
+            button.addEventListener('click', function() {
+                sendWebhookMessage(`Someone clicked on ${siteName}.`);
+            });
+        }
 
         searchInput.addEventListener('input', function() {
             const filter = searchInput.value.toLowerCase();
