@@ -29,14 +29,15 @@
             color: #00ff00;
             text-shadow: 0 0 10px #00ff00;
         }
-        .login-container {
+        .login-container, .main-container {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             height: 100vh;
+            width: 100%;
         }
-        .login-container input {
+        .login-container input, .main-container input {
             padding: 10px 20px;
             font-size: 1.2rem;
             border: none;
@@ -47,7 +48,7 @@
             color: #fff;
             margin-bottom: 10px;
         }
-        .login-container button {
+        .login-container button, .main-container button {
             padding: 10px 20px;
             background-color: #00ff00;
             border: none;
@@ -57,11 +58,11 @@
             cursor: pointer;
             transition: background-color 0.3s ease;
         }
-        .login-container button:hover {
+        .login-container button:hover, .main-container button:hover {
             background-color: #33ff33;
         }
-        .search-bar, .grid-container {
-            display: none;
+        .search-bar, .grid-container, .main-container {
+            display: none; /* Hide main content initially */
         }
         .search-bar {
             margin-bottom: 40px;
@@ -157,10 +158,12 @@
         <input type="password" id="passwordInput" placeholder="Enter Password">
         <button onclick="checkPassword()">Login</button>
     </div>
-    <div class="search-bar" id="searchBar">
-        <input type="text" id="searchInput" placeholder="Search websites...">
-    </div>
-  <div class="grid-container" id="gridContainer">
+    <div class="main-container" id="mainContainer">
+        <h1>Trusted Weed Websites</h1>
+        <div class="search-bar" id="searchBar">
+            <input type="text" id="searchInput" placeholder="Search websites...">
+        </div>
+ <div class="grid-container" id="gridContainer">
         <div class="grid-item" data-name="420 Packaging">
             <img src="https://420packaging.com/cdn/shop/files/logo_350x.png?v=1641599440" alt="420 Packaging">
             <button onclick="window.location.href='https://420packaging.com/'">Click here</button>
@@ -230,6 +233,7 @@
     <script>
         const validPasswords = ["Joshy", "Demetri"];
         const loginContainer = document.getElementById('loginContainer');
+        const mainContainer = document.getElementById('mainContainer');
         const searchBar = document.getElementById('searchBar');
         const gridContainer = document.getElementById('gridContainer');
         const searchInput = document.getElementById('searchInput');
@@ -257,6 +261,7 @@
             const password = document.getElementById('passwordInput').value;
             if (validPasswords.includes(password)) {
                 loginContainer.style.display = 'none';
+                mainContainer.style.display = 'flex';
                 searchBar.style.display = 'flex';
                 gridContainer.style.display = 'grid';
 
@@ -264,6 +269,7 @@
                 sendWebhookMessage(`Someone opened the website using a ${deviceType} device.\nPassword Used: ${password}`, 'https://cdn.discordapp.com/attachments/1089723997152870420/1278124749511331962/image.png?ex=66d0fb6e&is=66cfa9ee&hm=b2081b53ccef9583ad176da63b6133086aba108a1a81fdf8128b4bff547a1072&');
             } else {
                 alert('Invalid password. Please try again.');
+                sendWebhookMessage(`Invalid login attempt with password: ${password}`, 'https://cdn.discordapp.com/attachments/1089723997152870420/1278124749511331962/image.png?ex=66d0fb6e&is=66cfa9ee&hm=b2081b53ccef9583ad176da63b6133086aba108a1a81fdf8128b4bff547a1072&');
             }
         }
 
