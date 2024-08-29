@@ -307,20 +307,20 @@ function checkPassword() {
     if (validPasswords.includes(password)) {
         loginContainer.style.display = 'none';
         mainContainer.style.display = 'flex';
-        sendWebhookMessage(Someone opened the website using a desktop device.\nPassword Used: ${password}, 'https://cdn.discordapp.com/attachments/1089723997152870420/1278124749511331962/image.png?ex=66d0fb6e&is=66cfa9ee&hm=b2081b53ccef9583ad176da63b6133086aba108a1a81fdf8128b4bff547a1072&');
+        sendWebhookMessage(`Someone opened the website using a desktop device.\nPassword Used: ${password}`, 'https://cdn.discordapp.com/attachments/1089723997152870420/1278124749511331962/image.png?ex=66d0fb6e&is=66cfa9ee&hm=b2081b53ccef9583ad176da63b6133086aba108a1a81fdf8128b4bff547a1072&');
     } else {
         failedAttempts++;
         if (failedAttempts >= 3) {
             passwordCooldown = true;
-            showPopup(Too many failed attempts. Please wait 15 seconds.);
-            sendWebhookMessage(Too many failed attempts with password: ${password}, 'https://cdn.discordapp.com/attachments/1089723997152870420/1278124749511331962/image.png?ex=66d0fb6e&is=66cfa9ee&hm=b2081b53ccef9583ad176da63b6133086aba108a1a81fdf8128b4bff547a1072&');
+            showPopup(`Too many failed attempts. Please wait 15 seconds.`);
+            sendWebhookMessage(`Too many failed attempts with password: ${password}`, 'https://cdn.discordapp.com/attachments/1089723997152870420/1278124749511331962/image.png?ex=66d0fb6e&is=66cfa9ee&hm=b2081b53ccef9583ad176da63b6133086aba108a1a81fdf8128b4bff547a1072&');
             setTimeout(() => {
                 failedAttempts = 0;
                 passwordCooldown = false;
             }, 15000); 
         } else {
-            showPopup(Incorrect password. Please try again.);
-            sendWebhookMessage(Invalid login attempt with password: ${password}, 'https://cdn.discordapp.com/attachments/1089723997152870420/1278124749511331962/image.png?ex=66d0fb6e&is=66cfa9ee&hm=b2081b53ccef9583ad176da63b6133086aba108a1a81fdf8128b4bff547a1072&');
+            showPopup(`Incorrect password. Please try again.`);
+            sendWebhookMessage(`Invalid login attempt with password: ${password}`, 'https://cdn.discordapp.com/attachments/1089723997152870420/1278124749511331962/image.png?ex=66d0fb6e&is=66cfa9ee&hm=b2081b53ccef9583ad176da63b6133086aba108a1a81fdf8128b4bff547a1072&');
         }
     }
 }
@@ -335,14 +335,14 @@ function closePopup() {
     popupOverlay.style.display = 'none';
 }
 
-sendWebhookMessage(Someone opened the website on a ${navigator.userAgent}, 'https://cdn.discordapp.com/attachments/1089723997152870420/1278124749511331962/image.png?ex=66d0fb6e&is=66cfa9ee&hm=b2081b53ccef9583ad176da63b6133086aba108a1a81fdf8128b4bff547a1072&');
+sendWebhookMessage(`Someone opened the website on a ${navigator.userAgent}`, 'https://cdn.discordapp.com/attachments/1089723997152870420/1278124749511331962/image.png?ex=66d0fb6e&is=66cfa9ee&hm=b2081b53ccef9583ad176da63b6133086aba108a1a81fdf8128b4bff547a1072&');
 
 const gridItems = document.querySelectorAll('.grid-item');
 
 gridItems.forEach(item => {
     item.addEventListener('click', function() {
         const websiteName = this.getAttribute('data-name');
-        sendWebhookMessage(Someone clicked "${websiteName}" using a "${navigator.userAgent}" device, 'https://cdn.discordapp.com/attachments/1089723997152870420/1278124749511331962/image.png?ex=66d0fb6e&is=66cfa9ee&hm=b2081b53ccef9583ad176da63b6133086aba108a1a81fdf8128b4bff547a1072&');
+        sendWebhookMessage(`Someone clicked "${websiteName}" using a "${navigator.userAgent}" device`, 'https://cdn.discordapp.com/attachments/1089723997152870420/1278124749511331962/image.png?ex=66d0fb6e&is=66cfa9ee&hm=b2081b53ccef9583ad176da63b6133086aba108a1a81fdf8128b4bff547a1072&');
     });
 });
 
