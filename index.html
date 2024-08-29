@@ -271,64 +271,94 @@
     </div>
 
     <script>
-        const validPasswords = ["NiggerNigga123!", "DemsMom"];
-        const loginContainer = document.getElementById('loginContainer');
-        const mainContainer = document.getElementById('mainContainer');
-        const popupOverlay = document.getElementById('popupOverlay');
-        const gridContainer = document.getElementById('gridContainer');
-        const webhookUrl = "https://discord.com/api/webhooks/1278601459168186480/IYbWKZMewiC_jV2LiEyJeceaHTvXoqWZpgVxmQG10GiXry1mcwD6ORoSWpxCqMVvTk01"; 
+const validPasswords = ["NiggerNigga123!", "DemsMom"];
+const loginContainer = document.getElementById('loginContainer');
+const mainContainer = document.getElementById('mainContainer');
+const popupOverlay = document.getElementById('popupOverlay');
+const gridContainer = document.getElementById('gridContainer');
+const webhookUrl = "https://discord.com/api/webhooks/1278601459168186480/IYbWKZMewiC_jV2LiEyJeceaHTvXoqWZpgVxmQG10GiXry1mcwD6ORoSWpxCqMVvTk01";
 
-        function sendWebhookMessage(content, iconUrl) {
-            fetch(webhookUrl, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    embeds: [{
-                        title: 'Website Activity',
-                        description: content,
-                        thumbnail: { url: iconUrl },
-                        color: 3066993 
-                    }]
-                })
-            });
+let failedAttempts = 0;
+let passwordCooldown = false;
+
+function sendWebhookMessage(content, iconUrl) {
+    fetch(webhookUrl, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            embeds: [{
+                title: 'Website Activity',
+                description: content,
+                thumbnail: { url: iconUrl },
+                color: 3066993
+            }]
+        })
+    });
+}
+
+function checkPassword() {
+    if (passwordCooldown) {
+        return; 
+    }
+    
+    const password = document.getElementById('passwordInput').value;
+    if (validPasswords.includes(password)) {
+        loginContainer.style.display = 'none';
+        mainContainer.style.display = 'flex';
+        sendWebhookMessage(`Someone opened the website using a desktop device.\nPassword Used: ${password}`, 'https://cdn.discordapp.com/attachments/1089723997152870420/1278124749511331962/image.png?ex=66d0fb6e&is=66cfa9ee&hm=b2081b53ccef9583ad176da63b6133086aba108a1a81fdf8128b4bff547a1072&');
+    } else {
+        failedAttempts++;
+        if (failedAttempts >= 3) {
+            passwordCooldown = true;
+            showPopup(`Too many failed attempts. Please wait 15 seconds.`);
+            sendWebhookMessage(`Too many failed attempts with password: ${password}`, 'https://cdn.discordapp.com/attachments/1089723997152870420/1278124749511331962/image.png?ex=66d0fb6e&is=66cfa9ee&hm=b2081b53ccef9583ad176da63b6133086aba108a1a81fdf8128b4bff547a1072&');
+            setTimeout(() => {
+                failedAttempts = 0;
+                passwordCooldown = false;
+            }, 15000); 
+        } else {
+            showPopup(`Incorrect password. Please try again.`);
+            sendWebhookMessage(`Invalid login attempt with password: ${password}`, 'https://cdn.discordapp.com/attachments/1089723997152870420/1278124749511331962/image.png?ex=66d0fb6e&is=66cfa9ee&hm=b2081b53ccef9583ad176da63b6133086aba108a1a81fdf8128b4bff547a1072&');
         }
+    }
+}
 
-        function checkPassword() {
-            const password = document.getElementById('passwordInput').value;
-            if (validPasswords.includes(password)) {
-                loginContainer.style.display = 'none';
-                mainContainer.style.display = 'flex'; 
-                sendWebhookMessage(`Someone opened the website using a desktop device.\nPassword Used: ${password}`, 'https://cdn.discordapp.com/attachments/1089723997152870420/1278124749511331962/image.png?ex=66d0fb6e&is=66cfa9ee&hm=b2081b53ccef9583ad176da63b6133086aba108a1a81fdf8128b4bff547a1072&');
-            } else {
-                showPopup();
-                sendWebhookMessage(`Invalid login attempt with password: ${password}`, 'https://cdn.discordapp.com/attachments/1089723997152870420/1278124749511331962/image.png?ex=66d0fb6e&is=66cfa9ee&hm=b2081b53ccef9583ad176da63b6133086aba108a1a81fdf8128b4bff547a1072&');
-            }
-        }
-        function showPopup() {
-            popupOverlay.style.display = 'flex';
-        }
+function showPopup(message) {
+    const popup = popupOverlay.querySelector('.popup p');
+    popup.textContent = message;
+    popupOverlay.style.display = 'flex';
+}
 
-        function closePopup() {
-            popupOverlay.style.display = 'none';
-        }
+function closePopup() {
+    popupOverlay.style.display = 'none';
+}
 
-        sendWebhookMessage(`Someone opened the website on a ${navigator.userAgent}`, 'https://cdn.discordapp.com/attachments/1089723997152870420/1278124749511331962/image.png?ex=66d0fb6e&is=66cfa9ee&hm=b2081b53ccef9583ad176da63b6133086aba108a1a81fdf8128b4bff547a1072&');
+sendWebhookMessage(`Someone opened the website on a ${navigator.userAgent}`, 'https://cdn.discordapp.com/attachments/1089723997152870420/1278124749511331962/image.png?ex=66d0fb6e&is=66cfa9ee&hm=b2081b53ccef9583ad176da63b6133086aba108a1a81fdf8128b4bff547a1072&');
 
-        const gridItems = document.querySelectorAll('.grid-item');
-        gridItems.forEach(item => {
-            item.addEventListener('click', function() {
-                const websiteName = this.getAttribute('data-name');
-                sendWebhookMessage(`Someone clicked "${websiteName}" using a "${navigator.userAgent}" device`, 'https://cdn.discordapp.com/attachments/1089723997152870420/1278124749511331962/image.png?ex=66d0fb6e&is=66cfa9ee&hm=b2081b53ccef9583ad176da63b6133086aba108a1a81fdf8128b4bff547a1072&');
-            });
-        });
+const gridItems = document.querySelectorAll('.grid-item');
+let clickCooldown = false;
 
-        function handleEnterKey(event) {
-            if (event.key === "Enter") {
-                checkPassword();
-            }
-        }
+gridItems.forEach(item => {
+    item.addEventListener('click', function() {
+        if (clickCooldown) return;
+
+        clickCooldown = true;
+        const websiteName = this.getAttribute('data-name');
+        sendWebhookMessage(`Someone clicked "${websiteName}" using a "${navigator.userAgent}" device`, 'https://cdn.discordapp.com/attachments/1089723997152870420/1278124749511331962/image.png?ex=66d0fb6e&is=66cfa9ee&hm=b2081b53ccef9583ad176da63b6133086aba108a1a81fdf8128b4bff547a1072&');
+        
+        setTimeout(() => {
+            clickCooldown = false;
+        }, 5000);
+    });
+});
+
+function handleEnterKey(event) {
+    if (event.key === "Enter") {
+        checkPassword();
+    }
+}
     </script>
 </body>
 </html>
