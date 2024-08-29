@@ -65,13 +65,13 @@
             display: none;
             text-align: center;
         }
-        .main-container header {
-            text-align: center;
-            margin-bottom: 20px;
-            color: #00ff00;
-            text-shadow: 0 0 10px #00ff00;
-            font-size: 2rem;
-        }
+.main-container header {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #00ff00;
+    text-shadow: 0 0 10px #00ff00;
+    font-size: 2rem;
+}
         .grid-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -181,15 +181,14 @@
 <body>
     <div class="login-container" id="loginContainer">
         <h1>Login to Access</h1>
-        <input type="password" id="passwordInput" placeholder="Enter Password">
+<input type="password" id="passwordInput" placeholder="Enter Password" onkeydown="handleEnterKey(event)">
         <button onclick="checkPassword()">Login</button>
     </div>
-    <div class="main-container" id="mainContainer">
-        <h1>Trusted Weed Websites</h1>
-        <header>
-            <h2>Explore the Best Weed Sites</h2>
-        </header>
-        <div class="grid-container" id="gridContainer">
+<div class="main-container" id="mainContainer">
+    <header>
+        <h2>Explore the Best Weed Sites</h2>
+    </header>
+<div class="grid-container" id="gridContainer">
             <div class="grid-item" data-name="420 Packaging">
                 <img src="https://420packaging.com/cdn/shop/files/logo_350x.png?v=1641599440">
                 <button onclick="window.location.href='https://420packaging.com/'">Click here</button>
@@ -255,6 +254,7 @@
                 <button onclick="window.location.href='https://onlygas.com/'">Click here</button>
             </div>
         </div>
+
     </div>
     <div class="popup-overlay" id="popupOverlay">
         <div class="popup">
@@ -317,6 +317,12 @@
                 sendWebhookMessage(`Someone clicked "${websiteName}" using a "${navigator.userAgent}" device`, 'https://cdn.discordapp.com/attachments/1089723997152870420/1278124749511331962/image.png?ex=66d0fb6e&is=66cfa9ee&hm=b2081b53ccef9583ad176da63b6133086aba108a1a81fdf8128b4bff547a1072&');
             });
         });
+
+        function handleEnterKey(event) {
+    if (event.key === "Enter") {
+        checkPassword();
+    }
+}
     </script>
 </body>
 </html>
