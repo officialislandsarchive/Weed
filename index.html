@@ -288,18 +288,17 @@
             });
         }
 
-        function checkPassword() {
-            const password = document.getElementById('passwordInput').value;
-            if (validPasswords.includes(password)) {
-                loginContainer.style.display = 'none';
-                mainContainer.style.display = 'flex';
-                sendWebhookMessage(`Someone opened the website using a desktop device.\nPassword Used: ${password}`, 'https://cdn.discordapp.com/attachments/1089723997152870420/1278124749511331962/image.png?ex=66d0fb6e&is=66cfa9ee&hm=b2081b53ccef9583ad176da63b6133086aba108a1a81fdf8128b4bff547a1072&');
-            } else {
-                showPopup();
-                sendWebhookMessage(`Invalid login attempt with password: ${password}`, 'https://cdn.discordapp.com/attachments/1089723997152870420/1278124749511331962/image.png?ex=66d0fb6e&is=66cfa9ee&hm=b2081b53ccef9583ad176da63b6133086aba108a1a81fdf8128b4bff547a1072&');
-            }
-        }
-
+function checkPassword() {
+    const password = document.getElementById('passwordInput').value;
+    if (validPasswords.includes(password)) {
+        loginContainer.style.display = 'none';
+        mainContainer.style.display = 'flex'; 
+        sendWebhookMessage(`Someone opened the website using a desktop device.\nPassword Used: ${password}`, 'https://cdn.discordapp.com/attachments/1089723997152870420/1278124749511331962/image.png?ex=66d0fb6e&is=66cfa9ee&hm=b2081b53ccef9583ad176da63b6133086aba108a1a81fdf8128b4bff547a1072&');
+    } else {
+        showPopup();
+        sendWebhookMessage(`Invalid login attempt with password: ${password}`, 'https://cdn.discordapp.com/attachments/1089723997152870420/1278124749511331962/image.png?ex=66d0fb6e&is=66cfa9ee&hm=b2081b53ccef9583ad176da63b6133086aba108a1a81fdf8128b4bff547a1072&');
+    }
+}
         function showPopup() {
             popupOverlay.style.display = 'flex';
         }
