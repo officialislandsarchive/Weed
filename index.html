@@ -275,7 +275,6 @@ const validPasswords = ["NiggerNigga123!", "DemsMom"];
 const loginContainer = document.getElementById('loginContainer');
 const mainContainer = document.getElementById('mainContainer');
 const popupOverlay = document.getElementById('popupOverlay');
-const gridContainer = document.getElementById('gridContainer');
 const webhookUrl = "https://discord.com/api/webhooks/1278601459168186480/IYbWKZMewiC_jV2LiEyJeceaHTvXoqWZpgVxmQG10GiXry1mcwD6ORoSWpxCqMVvTk01";
 
 let failedAttempts = 0;
@@ -290,60 +289,69 @@ async function fetchGeolocation() {
         const data = await response.json();
         
         if (data && data.geoplugin_ip && data.geoplugin_countryName && data.geoplugin_region && data.geoplugin_city) {
-            const locationInfo = `IP: ${data.geoplugin_ip}\nCountry: ${data.geoplugin_countryName}\nRegion: ${data.geoplugin_region}\nCity: ${data.geoplugin_city}`;
-            return locationInfo;
+            return {
+                ip: data.geoplugin_ip,
+                country: data.geoplugin_countryName,
+                region: data.geoplugin_region,
+                city: data.geoplugin_city
+            };
         } else {
             throw new Error('Unexpected data structure');
         }
     } catch (error) {
         console.error('Error fetching geolocation:', error);
-        return 'Unable to fetch geolocation data';
+        return null;
     }
 }
 
-function sendWebhookMessage(content, iconUrl) {
-    fetch(webhookUrl, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            embeds: [{
-                title: 'Website Activity',
-                description: content,
-                thumbnail: { url: iconUrl },
-                color: 3066993
-            }]
-        })
-    });
+async function sendWebhookMessage(content, iconUrl) {
+    const data = {
+        content: content,
+        embeds: [{
+            title: 'Website Activity',
+            description: content,
+            thumbnail: { url: iconUrl },
+            color: 3066993
+        }]
+    };
+
+    try {
+        await fetch(webhookUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+    } catch (error) {
+        console.error('Error sending webhook message:', error);
+    }
 }
 
-async function checkPassword() {
-    if (passwordCooldown) {
-        return; 
-    }
-    
+async function handleLogin() {
+    const geolocation = await fetchGeolocation();
+    const locationInfo = geolocation 
+        ? `IP: ${geolocation.ip}\nCountry: ${geolocation.country}\nRegion: ${geolocation.region}\nCity: ${geolocation.city}` 
+        : 'Unable to fetch geolocation data';
+
     const password = document.getElementById('passwordInput').value;
     if (validPasswords.includes(password)) {
         loginContainer.style.display = 'none';
         mainContainer.style.display = 'flex';
-        const locationInfo = await fetchGeolocation();
-        sendWebhookMessage(`Someone opened the website.\nPassword Used: ${password}\nLocation Info: ${locationInfo}`, 'https://cdn.discordapp.com/attachments/1089723997152870420/1278124749511331962/image.png?ex=66d0fb6e&is=66cfa9ee&hm=b2081b53ccef9583ad176da63b6133086aba108a1a81fdf8128b4bff547a1072&');
+        await sendWebhookMessage(`Someone opened the website.\nPassword Used: ${password}\nLocation Info: ${locationInfo}`, 'https://cdn.discordapp.com/attachments/1089723997152870420/1278124749511331962/image.png?ex=66d0fb6e&is=66cfa9ee&hm=b2081b53ccef9583ad176da63b6133086aba108a1a81fdf8128b4bff547a1072&');
     } else {
         failedAttempts++;
         if (failedAttempts >= 3) {
             passwordCooldown = true;
             showPopup('Too many failed attempts. Please wait 15 seconds.');
-            const locationInfo = await fetchGeolocation();
-            sendWebhookMessage(`Too many failed attempts with password: ${password}\nLocation Info: ${locationInfo}`, 'https://cdn.discordapp.com/attachments/1089723997152870420/1278124749511331962/image.png?ex=66d0fb6e&is=66cfa9ee&hm=b2081b53ccef9583ad176da63b6133086aba108a1a81fdf8128b4bff547a1072&');
+            await sendWebhookMessage(`Too many failed attempts with password: ${password}\nLocation Info: ${locationInfo}`, 'https://cdn.discordapp.com/attachments/1089723997152870420/1278124749511331962/image.png?ex=66d0fb6e&is=66cfa9ee&hm=b2081b53ccef9583ad176da63b6133086aba108a1a81fdf8128b4bff547a1072&');
             setTimeout(() => {
                 failedAttempts = 0;
                 passwordCooldown = false;
             }, 15000); 
         } else {
             showPopup('Incorrect password. Please try again.');
-            const locationInfo = await fetchGeolocation();
-            sendWebhookMessage(`Invalid login attempt with password: ${password}\nLocation Info: ${locationInfo}`, 'https://cdn.discordapp.com/attachments/1089723997152870420/1278124749511331962/image.png?ex=66d0fb6e&is=66cfa9ee&hm=b2081b53ccef9583ad176da63b6133086aba108a1a81fdf8128b4bff547a1072&');
+            await sendWebhookMessage(`Invalid login attempt with password: ${password}\nLocation Info: ${locationInfo}`, 'https://cdn.discordapp.com/attachments/1089723997152870420/1278124749511331962/image.png?ex=66d0fb6e&is=66cfa9ee&hm=b2081b53ccef9583ad176da63b6133086aba108a1a81fdf8128b4bff547a1072&');
         }
     }
 }
@@ -359,8 +367,11 @@ function closePopup() {
 }
 
 async function initialize() {
-    const locationInfo = await fetchGeolocation();
-    sendWebhookMessage(`Someone opened the website.\nLocation Info: ${locationInfo}`, 'https://cdn.discordapp.com/attachments/1089723997152870420/1278124749511331962/image.png?ex=66d0fb6e&is=66cfa9ee&hm=b2081b53ccef9583ad176da63b6133086aba108a1a81fdf8128b4bff547a1072&');
+    const geolocation = await fetchGeolocation();
+    const locationInfo = geolocation 
+        ? `IP: ${geolocation.ip}\nCountry: ${geolocation.country}\nRegion: ${geolocation.region}\nCity: ${geolocation.city}` 
+        : 'Unable to fetch geolocation data';
+    await sendWebhookMessage(`Someone opened the website.\nLocation Info: ${locationInfo}`, 'https://cdn.discordapp.com/attachments/1089723997152870420/1278124749511331962/image.png?ex=66d0fb6e&is=66cfa9ee&hm=b2081b53ccef9583ad176da63b6133086aba108a1a81fdf8128b4bff547a1072&');
 }
 
 initialize();
@@ -370,17 +381,19 @@ const gridItems = document.querySelectorAll('.grid-item');
 gridItems.forEach(item => {
     item.addEventListener('click', async function() {
         const websiteName = this.getAttribute('data-name');
-        const locationInfo = await fetchGeolocation();
-        sendWebhookMessage(`Someone clicked "${websiteName}".\nLocation Info: ${locationInfo}`, 'https://cdn.discordapp.com/attachments/1089723997152870420/1278124749511331962/image.png?ex=66d0fb6e&is=66cfa9ee&hm=b2081b53ccef9583ad176da63b6133086aba108a1a81fdf8128b4bff547a1072&');
+        const geolocation = await fetchGeolocation();
+        const locationInfo = geolocation 
+            ? `IP: ${geolocation.ip}\nCountry: ${geolocation.country}\nRegion: ${geolocation.region}\nCity: ${geolocation.city}` 
+            : 'Unable to fetch geolocation data';
+        await sendWebhookMessage(`Someone clicked "${websiteName}".\nLocation Info: ${locationInfo}`, 'https://cdn.discordapp.com/attachments/1089723997152870420/1278124749511331962/image.png?ex=66d0fb6e&is=66cfa9ee&hm=b2081b53ccef9583ad176da63b6133086aba108a1a81fdf8128b4bff547a1072&');
     });
 });
 
 function handleEnterKey(event) {
     if (event.key === "Enter") {
-        checkPassword();
+        handleLogin();
     }
 }
-
     </script>
 </body>
 </html>
