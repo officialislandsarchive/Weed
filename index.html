@@ -57,62 +57,70 @@
             width: 100%;
             max-width: 1400px;
         }
-        .grid-item {
-            background-color: #222;
-            border-radius: 20px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            overflow: hidden;
-            text-align: center;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            position: relative;
-        }
-        .grid-item:hover {
-            transform: translateY(-15px);
-            box-shadow: 0 4px 15px rgba(0, 255, 0, 0.5);
-        }
-        .grid-item img {
-            width: 100%;
-            max-width: 200px;
-            height: auto;
-            margin-top: 20px;
-            border-bottom: 2px solid #00ff00;
-        }
-        .grid-item button {
-            margin: 20px;
-            padding: 15px 30px;
-            background-color: #00ff00;
-            border: none;
-            border-radius: 25px;
-            color: #000;
-            font-size: 1.2rem;
-            cursor: pointer;
-            transition: background-color 0.3s ease, box-shadow 0.3s ease;
-            width: calc(100% - 40px);
-        }
-        .grid-item button:hover {
-            background-color: #33ff33;
-            box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
-        }
-        .grid-item::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: rgba(0, 255, 0, 0.2);
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-            opacity: 0;
-            z-index: 1;
-            transform: rotate(45deg);
-        }
-        .grid-item:hover::before {
-            opacity: 1;
-        }
-        .grid-item button:hover::before {
-            opacity: 1;
-        }
+       .grid-item {
+    background-color: #222;
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.grid-item img {
+    width: 100%;
+    max-width: 200px;
+    height: auto;
+    margin: 0 auto 20px;
+    border-bottom: 2px solid #00ff00;
+}
+
+.grid-item button {
+    margin: 0;
+    padding: 15px 30px;
+    background-color: #00ff00;
+    border: none;
+    border-radius: 25px;
+    color: #000;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 40px);
+}
+
+.grid-item button:hover {
+    background-color: #33ff33;
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+}
+
+.grid-item::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: rgba(0, 255, 0, 0.2);
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    opacity: 0;
+    z-index: 1;
+    transform: rotate(45deg);
+}
+
+.grid-item:hover::before {
+    opacity: 1;
+}
+
+.grid-item button:hover::before {
+    opacity: 1;
+}
     </style>
 </head>
 <body>
