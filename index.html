@@ -62,8 +62,14 @@
             background-color: #33ff33;
         }
         .main-container {
-            display: none;
+            display: none; /* Hide main content initially */
             text-align: center;
+        }
+        .main-container h1 {
+            color: #00ff00;
+            text-shadow: 0 0 10px #00ff00;
+            margin-top: 0;
+            margin-bottom: 20px;
         }
         .grid-container {
             display: grid;
@@ -178,7 +184,7 @@
     </div>
     <div class="main-container" id="mainContainer">
         <h1>Trusted Weed Websites</h1>
-        <div class="grid-container" id="gridContainer">
+ <div class="grid-container" id="gridContainer">
         <div class="grid-item" data-name="420 Packaging">
             <img src="https://420packaging.com/cdn/shop/files/logo_350x.png?v=1641599440">
             <button onclick="window.location.href='https://420packaging.com/'">Click here</button>
@@ -250,6 +256,12 @@
             <button onclick="closePopup()">OK</button>
         </div>
     </div>
+    <div class="popup-overlay" id="popupOverlay">
+        <div class="popup">
+            <p>Incorrect password. Please try again.</p>
+            <button onclick="closePopup()">OK</button>
+        </div>
+    </div>
 
     <script>
         const validPasswords = ["Joshy", "Demetri"];
@@ -270,7 +282,7 @@
                         title: 'Website Activity',
                         description: content,
                         thumbnail: { url: iconUrl },
-                        color: 3066993 
+                        color: 3066993 // A green color
                     }]
                 })
             });
@@ -296,15 +308,17 @@
             popupOverlay.style.display = 'none';
         }
 
+        // Send notification when the website is opened
         sendWebhookMessage(`Someone opened the website on a ${navigator.userAgent}`, 'https://cdn.discordapp.com/attachments/1089723997152870420/1278124749511331962/image.png?ex=66d0fb6e&is=66cfa9ee&hm=b2081b53ccef9583ad176da63b6133086aba108a1a81fdf8128b4bff547a1072&');
 
+        // Event listener for grid item clicks
         const gridItems = document.querySelectorAll('.grid-item');
-        for (let i = 0; i < gridItems.length; i++) {
-            gridItems[i].addEventListener('click', function() {
+        gridItems.forEach(item => {
+            item.addEventListener('click', function() {
                 const websiteName = this.querySelector('h2').innerText;
                 sendWebhookMessage(`Someone clicked "${websiteName}" using a "${navigator.userAgent}" device`, 'https://cdn.discordapp.com/attachments/1089723997152870420/1278124749511331962/image.png?ex=66d0fb6e&is=66cfa9ee&hm=b2081b53ccef9583ad176da63b6133086aba108a1a81fdf8128b4bff547a1072&');
             });
-        }
+        });
     </script>
 </body>
 </html>
