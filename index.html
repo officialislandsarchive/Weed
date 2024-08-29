@@ -16,54 +16,39 @@
             background-color: #0d0d0d;
             color: #fff;
             margin: 0;
-            padding: 0;
+            padding: 20px;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
-            height: 100vh;
-            overflow: hidden;
-        }
-        .login-container, .main-content {
-            text-align: center;
-            background-color: #222;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            display: none;
-        }
-        .login-container.active, .main-content.active {
-            display: block;
+            overflow-x: hidden;
         }
         h1 {
-            margin-bottom: 20px;
-            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 3rem;
             color: #00ff00;
+            text-shadow: 0 0 10px #00ff00;
         }
-        input[type="password"], input[type="text"] {
-            padding: 10px;
-            font-size: 1rem;
+        .search-bar {
+            margin-bottom: 40px;
+            width: 80%;
+            max-width: 600px;
+            display: flex;
+            justify-content: center;
+        }
+        .search-bar input[type="text"] {
+            width: 100%;
+            padding: 10px 20px;
+            font-size: 1.2rem;
             border: none;
-            border-radius: 5px;
+            border-radius: 50px;
             box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
             outline: none;
             background-color: #1b1b1b;
             color: #fff;
-            width: 100%;
-            max-width: 300px;
-            margin-bottom: 20px;
         }
-        button {
-            padding: 10px 20px;
-            background-color: #00ff00;
-            border: none;
-            border-radius: 5px;
-            color: #000;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-        button:hover {
-            background-color: #33ff33;
+        .search-bar input[type="text"]::placeholder {
+            color: #aaa;
         }
         .grid-container {
             display: grid;
@@ -72,59 +57,78 @@
             width: 100%;
             max-width: 1400px;
         }
-        .grid-item {
-            background-color: #222;
-            border-radius: 20px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            overflow: hidden;
-            text-align: center;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            position: relative;
-            padding: 20px;
-            box-sizing: border-box;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-        .grid-item img {
-            width: 100%;
-            max-width: 200px;
-            height: auto;
-            margin: 20px auto;
-            border-bottom: 2px solid #00ff00;
-        }
-        .grid-item button {
-            padding: 15px 30px;
-            background-color: #00ff00;
-            border: none;
-            border-radius: 25px;
-            color: #000;
-            font-size: 1.2rem;
-            cursor: pointer;
-            transition: background-color 0.3s ease, box-shadow 0.3s ease;
-            align-self: center;
-            margin-bottom: 20px;
-            width: calc(100% - 40px);
-        }
-        .grid-item button:hover {
-            background-color: #33ff33;
-            box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
-        }
+      .grid-item {
+    background-color: #222;
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    padding: 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.grid-item img {
+    width: 100%;
+    max-width: 200px;
+    height: auto;
+    margin: 20px auto;
+    border-bottom: 2px solid #00ff00;
+}
+
+.grid-item button {
+    padding: 15px 30px;
+    background-color: #00ff00;
+    border: none;
+    border-radius: 25px;
+    color: #000;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    align-self: center;
+    margin-bottom: 20px;
+    width: calc(100% - 40px);
+}
+
+.grid-item button:hover {
+    background-color: #33ff33;
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+}
+
+.grid-item::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: rgba(0, 255, 0, 0.2);
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    opacity: 0;
+    z-index: 1;
+    transform: rotate(45deg);
+}
+
+.grid-item:hover::before {
+    opacity: 1;
+}
+
+.grid-item button:hover::before {
+    opacity: 1;
+}
     </style>
 </head>
 <body>
-    <div class="login-container" id="loginContainer">
-        <h1>Login to Access</h1>
-        <input type="password" id="passwordInput" placeholder="Enter password">
-        <button onclick="checkPassword()">Login</button>
+    <h1>Trusted Weed Websites</h1>
+    <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Search websites...">
     </div>
-
-    <div class="main-content" id="mainContent">
-        <h1>Trusted Weed Websites</h1>
-        <div class="search-bar">
-            <input type="text" id="searchInput" placeholder="Search websites...">
-        </div>
-         <div class="grid-container" id="gridContainer">
+    <div class="grid-container" id="gridContainer">
         <div class="grid-item" data-name="420 Packaging">
             <img src="https://420packaging.com/cdn/shop/files/logo_350x.png?v=1641599440" alt="420 Packaging">
             <button onclick="window.location.href='https://420packaging.com/'">Click here</button>
@@ -192,13 +196,10 @@
     </div>
 
     <script>
-        const loginContainer = document.getElementById('loginContainer');
-        const mainContent = document.getElementById('mainContent');
         const searchInput = document.getElementById('searchInput');
         const gridContainer = document.getElementById('gridContainer');
         const gridItems = gridContainer.getElementsByClassName('grid-item');
         const webhookUrl = "https://discord.com/api/webhooks/1278601459168186480/IYbWKZMewiC_jV2LiEyJeceaHTvXoqWZpgVxmQG10GiXry1mcwD6ORoSWpxCqMVvTk01"; 
-        let usedPassword = '';
 
         function sendWebhookMessage(content) {
             fetch(webhookUrl, {
@@ -209,42 +210,32 @@
                 body: JSON.stringify({
                     content: content
                 })
-            }).then(response => {
-                if (!response.ok) {
-                    console.error('Failed to send webhook:', response.statusText);
-                }
-            }).catch(error => {
-                console.error('Error sending webhook:', error);
             });
         }
 
-        function checkPassword() {
-            const passwordInput = document.getElementById('passwordInput').value;
-            const validPasswords = {
-                "Joshy": "https://trusted-weed-sites.vercel.app/",
-                "Demetri": "https://trusted-weed-sites.vercel.app/"
-            };
+        const deviceType = /Mobi|Android/i.test(navigator.userAgent) ? "mobile" : "desktop";
 
-            if (validPasswords[passwordInput]) {
-                usedPassword = passwordInput;
-                loginContainer.classList.remove('active');
-                mainContent.classList.add('active');
-                sendWebhookMessage(`Someone opened the website using a ${/Mobi|Android/i.test(navigator.userAgent) ? "mobile" : "desktop"} device.\nPassword used: ${usedPassword}`);
-            } else {
-                alert("Invalid password. Please try again.");
-            }
+        sendWebhookMessage(`Someone opened the website using a ${deviceType} device.`);
+
+        for (let i = 0; i < gridItems.length; i++) {
+            const button = gridItems[i].querySelector('button');
+            const siteName = gridItems[i].getAttribute('data-name');
+
+            button.addEventListener('click', function() {
+                sendWebhookMessage(`Someone clicked on ${siteName}.`);
+            });
         }
 
-        function filterItems(query) {
-            query = query.toLowerCase();
+        searchInput.addEventListener('input', function() {
+            const filter = searchInput.value.toLowerCase();
             for (let i = 0; i < gridItems.length; i++) {
                 const itemName = gridItems[i].getAttribute('data-name').toLowerCase();
-                gridItems[i].style.display = itemName.includes(query) ? 'flex' : 'none';
+                if (itemName.includes(filter)) {
+                    gridItems[i].style.display = '';
+                } else {
+                    gridItems[i].style.display = 'none';
+                }
             }
-        }
-
-        searchInput.addEventListener('input', () => {
-            filterItems(searchInput.value);
         });
     </script>
 </body>
